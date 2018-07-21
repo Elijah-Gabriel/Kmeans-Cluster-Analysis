@@ -1,0 +1,38 @@
+Download the dataset "Data587.csv" from https://cse.sc.edu/~rose/587/CSV/Data587.csv. Load this data set into rstudio.
+
+attach(Data587)
+set.seed(787)
+pdf("Gabriel Data587.pdf", 8.5, 11)
+Plot(Data587)
+dev.off()
+set.seed(787)
+withinSumSqrs = numeric(20)
+for (k in 1:20) withinSumSqrs[k] = 
+  sum(kmeans(cbind(Data587),centers=k)$withinss)
+pdf("Gabriel K Means.pdf", 8.5, 11)
+plot(1:20, withinSumSqrs, type="b", xlab="# Clusters", ylab="Within sum of square") 
+dev.off()
+
+kmeans=kmeans(cbind(Data587),4)
+points(kmeans$centers,col=1:4,pch=20)
+plot(Data587,col=kmeans$cluster)
+pdf("Gabriel Different Colored Data587.pdf", 8.5, 11)
+plot(Data587,col=kmeans$cluster)
+dev.off()
+
+hclust(Data587)
+dist(Data587)
+plot(hclust(dist(Data587)))
+pdf("Gabriel Cluster Dendrogram.pdf", 8.5,11)
+plot(hclust(dist(Data587)))
+dev.off()
+
+d=dist(Data587,method="euclidean")
+fit=hclust(d,method="ward.D")
+Groups=cutree(fit,k=4)
+rect.hclust(fit,k=4,border="red")
+pdf("Gabriel K Means Cluster Dendrogram.pdf", 8.5,11)
+plot(fit)
+Groups=cutree(fit,k=4)
+rect.hclust(fit,k=4,border="red")
+dev.off()
